@@ -1,0 +1,26 @@
+kind: pipeline
+name: default
+type: docker
+
+steps:
+  
+  - name: publish
+    image: plugins/docker
+    settings:
+      registry: quay.io
+      repo: quay.io/fivium/fivium-auto-tag
+      config:
+        from_secret: docker_config_json
+    when:
+      branch:
+        - main
+      status:
+        - success
+
+image_pull_secrets:
+  - docker_config_json
+
+---
+kind: secret
+name: docker_config_json
+data: yyQOiyZuyAzD8K8Sg5KGkoqEpTHM7LjZhgADmG6SIpjoiFVK/GKlYG4uOPia1HYaR8kUpBH1sBUG7X/z09LTGUvHjHnuurOAzu727K+V7bHYL3m3+hJwyg/U73V0xcNR4qZasSHUuUZmvS6lYw9X7tS277EQOOom4M7l851RPMCu1gy+FVqtqKaST6nGXreZoFihEqBLuoWCUAzxE5YfquZ3DQIsqzu59YoHyGf0gYclHu1heunPZWAtQdELbuDU9kVAklEdthH8ohcsLTVuUNtYizY8o7q3hwsISaqHHU1ekvAjPNHThpgUO3PE8mEkI1WXlCcMPTAh2NLVYJw=
